@@ -1,0 +1,47 @@
+<svg width="400" height="200" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#e8a0b0"/>
+    <stop offset="100%" stop-color="#a888e0"/>
+  </linearGradient>
+</defs>
+
+<!-- grid -->
+<line x1="160" y1="55"  x2="520" y2="55"  stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="160" y1="95"  x2="520" y2="95"  stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="160" y1="135" x2="520" y2="135" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="160" y1="175" x2="520" y2="175" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="160" y1="215" x2="520" y2="215" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="160" y1="255" x2="520" y2="255" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="200" y1="35"  x2="200" y2="285" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="240" y1="35"  x2="240" y2="285" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="280" y1="35"  x2="280" y2="285" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="320" y1="35"  x2="320" y2="285" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="360" y1="35"  x2="360" y2="285" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="400" y1="35"  x2="400" y2="285" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="440" y1="35"  x2="440" y2="285" stroke="#ecdff0" stroke-width="0.7"/>
+<line x1="480" y1="35"  x2="480" y2="285" stroke="#ecdff0" stroke-width="0.7"/>
+
+<!-- corner brackets -->
+<polyline points="165,74 165,44 195,44" fill="none" stroke="#c9b8f7" stroke-width="2.5"/>
+<polyline points="515,74 515,44 485,44" fill="none" stroke="#c9b8f7" stroke-width="2.5"/>
+<polyline points="165,246 165,276 195,276" fill="none" stroke="#c9b8f7" stroke-width="2.5"/>
+<polyline points="515,246 515,276 485,276" fill="none" stroke="#c9b8f7" stroke-width="2.5"/>
+
+<!-- J -->
+<rect x="228" y="80" width="70" height="13" rx="4" fill="url(#g)"/>
+<rect x="258" y="80" width="13" height="115" rx="4" fill="url(#g)"/>
+<path d="M271 192 Q271 222 249 222 Q226 222 226 200 L226 188 L239 188 L239 200 Q239 209 249 209 Q258 209 258 198 L258 192 Z" fill="url(#g)"/>
+
+<!-- M -->
+<rect x="318" y="80" width="13" height="140" rx="4" fill="url(#g)"/>
+<rect x="397" y="80" width="13" height="140" rx="4" fill="url(#g)"/>
+<polygon points="318,80 410,80 365,158" fill="url(#g)"/>
+
+<!-- eyebrow -->
+<text x="340" y="40" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" letter-spacing="4" fill="#8a7a92">CYBERSECURITY</text>
+
+<!-- bottom label -->
+<text x="340" y="264" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" letter-spacing="3" fill="#8a7a92">// THREAT ANALYST · IAM · SOC</text>
+
+</svg>
