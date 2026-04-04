@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jensy Maldonado | Cybersecurity</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pink:    #f7b8c4;
+      --lavender:#c9b8f7;
+      --mint:    #b8f0e0;
+      --peach:   #f7d9b8;
+      --sky:     #b8e4f7;
+      --bg:      #fdf6f9;
+      --card:    #ffffff;
+      --text:    #2d2233;
+      --muted:   #8a7a92;
+      --border:  #ecdff0;
+      --danger:  #e05050;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    .blob { position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.35; z-index: 0; animation: drift 12s ease-in-out infinite alternate; }
+    .blob-1 { width: 500px; height: 500px; background: var(--pink);    top: -100px; left: -100px; animation-delay: 0s; }
+    .blob-2 { width: 400px; height: 400px; background: var(--lavender);bottom: -80px; right: -80px; animation-delay: -4s; }
+    .blob-3 { width: 300px; height: 300px; background: var(--mint);    top: 40%; left: 55%;      animation-delay: -8s; }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,20px) scale(1.05); } }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(253,246,249,0.75); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--muted); font-style: italic; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a { font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    section { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+    .divider { height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); margin: 0 2rem; position: relative; z-index: 1; }
+    .section-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+    h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem,4vw,2.8rem); color: var(--text); margin-bottom: 1.5rem; }
+
+    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 8rem; }
+    .hero-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 3rem; }
+    .hero-text { flex: 1; }
+    .hero-photo-wrap {
+      flex-shrink: 0;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, #e8a0b0, #a888e0, #b8f0e0);
+      box-shadow: 0 12px 48px rgba(168,136,224,0.25);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+      margin-top: 2.8rem;
+    }
+    .hero-photo {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 10%;
+      border: 3px solid var(--bg);
+    }
+    .timeline-bullets { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+    .timeline-bullets li { font-size: 0.88rem; color: var(--muted); line-height: 1.6; padding-left: 1.2rem; position: relative; }
+    .timeline-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--lavender); font-size: 0.75rem; top: 0.1rem; }
+    .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s; }
+    h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3rem,8vw,6rem); line-height: 1.05; color: var(--text); opacity: 0; animation: fadeUp 0.7s ease forwards 0.4s; }
+    h1 em { font-style: italic; background: linear-gradient(135deg,#d48fa0,#9b7fd4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { margin-top: 1.5rem; font-size: 1.1rem; color: var(--muted); max-width: 520px; line-height: 1.7; opacity: 0; animation: fadeUp 0.7s ease forwards 0.6s; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; opacity: 0; animation: fadeUp 0.7s ease forwards 0.8s; }
+    .tag { font-family: 'DM Mono', monospace; font-size: 0.72rem; padding: 0.35rem 0.9rem; border-radius: 999px; border: 1.5px solid; letter-spacing: 0.05em; }
+    .tag-pink  { border-color: var(--pink);    color: #c0607a; background: #fef0f3; }
+    .tag-lav   { border-color: var(--lavender);color: #6b55b8; background: #f3f0fe; }
+    .tag-mint  { border-color: var(--mint);    color: #2d9971; background: #f0fef8; }
+    .tag-sky   { border-color: var(--sky);     color: #3080a8; background: #f0f8fe; }
+    .hero-ctas { display: flex; gap: 1rem; margin-top: 2.5rem; opacity: 0; animation: fadeUp 0.7s ease forwards 1s; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.6rem; border-radius: 999px; font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: none; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .btn-primary { background: linear-gradient(135deg,#e8a0b0,#a888e0); color: #fff; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--muted); }
+    .btn-outline:hover { border-color: var(--lavender); color: var(--text); }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .about-text p { color: var(--muted); line-height: 1.8; font-size: 1rem; margin-bottom: 1rem; }
+    .about-text p strong { color: var(--text); font-weight: 700; }
+    .about-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 20px; padding: 1.8rem; box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+    .about-card h3 { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem; }
+    .stat-row { display: flex; flex-direction: column; gap: 1rem; }
+    .stat-item { display: flex; align-items: center; gap: 0.8rem; }
+    .stat-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .stat-item span { font-size: 0.9rem; color: var(--text); font-weight: 600; }
+    .stat-item small { display: block; font-size: 0.78rem; color: var(--muted); }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--pink), var(--lavender), var(--mint)); border-radius: 2px; }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; transition: box-shadow 0.2s; }
+    .timeline-item::before { content: ''; position: absolute; left: -2.45rem; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--card); border: 2.5px solid var(--lavender); }
+    .timeline-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.5rem 1.8rem; box-shadow: 0 2px 16px rgba(0,0,0,0.04); transition: box-shadow 0.2s, transform 0.2s; }
+    .timeline-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+    .timeline-title { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .timeline-date { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); white-space: nowrap; background: var(--bg); padding: 0.25rem 0.7rem; border-radius: 999px; border: 1px solid var(--border); }
+    .timeline-company { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.8rem; font-weight: 600; }
+    .timeline-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .timeline-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .pill { font-family: 'DM Mono', monospace; font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 999px; background: var(--bg); border: 1px solid var(--border); color: var(--muted); }
+
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 1.5rem; }
+    .cert-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 20px; padding: 2rem; text-align: center; box-shadow: 0 2px 16px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: block; }
+    .cert-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.1); }
+    .cert-icon { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.8rem; }
+    .cert-name { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.3rem; }
+    .cert-issuer { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
+    .cert-status { display: inline-block; margin-top: 1rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; padding: 0.25rem 0.75rem; border-radius: 999px; }
+    .cert-active   { background: #e8faf2; color: #2d9971; border: 1px solid #b8f0e0; }
+    .cert-progress { background: #fef3e8; color: #c07830; border: 1px solid #f7d9b8; }
+
+    .community-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.8rem; box-shadow: 0 2px 16px rgba(0,0,0,0.04); display: flex; gap: 1.4rem; align-items: flex-start; transition: box-shadow 0.2s; }
+    .community-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+    .community-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #f3f0fe; }
+    .community-body h3 { font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; }
+    .community-org { font-size: 0.85rem; color: var(--muted); font-weight: 600; margin-bottom: 0.6rem; }
+    .community-body p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .skills-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .skill-group-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+    .org-logo { height: 32px; width: auto; object-fit: contain; opacity: 0.85; border-radius: 4px; }
+    .org-logos { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+
+    /* EASTER EGG */
+    .easter-egg {
+      position: fixed;
+      bottom: -28px;
+      right: 2.5rem;
+      z-index: 200;
+      cursor: pointer;
+      transition: bottom 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      user-select: none;
+    }
+    .easter-egg:hover { bottom: -10px; }
+    .easter-egg-bubble {
+      background: #2d2233;
+      color: #fff;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      text-align: center;
+      line-height: 1.4;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      position: relative;
+      animation: wobble 3s ease-in-out infinite;
+    }
+    .easter-egg-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -6px; left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: #2d2233;
+      border-bottom: none;
+    }
+    .easter-egg-icon { font-size: 2rem; display: block; text-align: center; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+    @keyframes wobble {
+      0%,100% { transform: rotate(-3deg); }
+      50%      { transform: rotate(3deg); }
+    }
+
+    /* Easter egg modal */
+    .egg-modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(45,34,51,0.7);
+      backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+    }
+    .egg-modal-overlay.show { display: flex; }
+    .egg-modal {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      max-width: 440px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .egg-modal .egg-big { font-size: 3rem; margin-bottom: 1rem; }
+    .egg-modal h3 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--text); margin-bottom: 0.6rem; }
+    .egg-modal p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+    .egg-modal .egg-tip { font-family: 'DM Mono', monospace; font-size: 0.75rem; background: #fef0f3; border: 1px solid var(--pink); color: #c0607a; padding: 0.6rem 1rem; border-radius: 10px; margin-bottom: 1.5rem; line-height: 1.5; }
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* PHISHING */
+    .phishing-wrapper { background: var(--card); border: 1.5px solid var(--border); border-radius: 24px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.07); }
+    .phishing-intro { padding: 2rem 2.5rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .phishing-intro h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); }
+    .phishing-intro p { font-size: 0.88rem; color: var(--muted); margin-top: 0.3rem; }
+    .score-badge { font-family: 'DM Mono', monospace; font-size: 0.8rem; background: var(--bg); border: 1.5px solid var(--border); border-radius: 999px; padding: 0.4rem 1.2rem; color: var(--muted); white-space: nowrap; }
+    .score-badge span { color: var(--text); font-weight: 700; }
+
+    .email-client { display: grid; grid-template-columns: 200px 1fr; min-height: 420px; }
+    .email-sidebar { background: #f8f4fb; border-right: 1px solid var(--border); padding: 1.2rem 1rem; }
+    .email-sidebar-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; padding: 0 0.4rem; }
+    .email-list-item { padding: 0.7rem 0.8rem; border-radius: 10px; background: white; border: 1.5px solid var(--lavender); margin-bottom: 0.4rem; }
+    .email-list-item .el-from { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+    .email-list-item .el-subject { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .email-body { padding: 1.8rem 2rem; position: relative; }
+    .email-header-row { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.2rem; }
+    .email-subject-line { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
+    .email-meta { font-size: 0.8rem; color: var(--muted); display: flex; flex-direction: column; gap: 0.2rem; }
+    .email-content { font-size: 0.9rem; color: var(--text); line-height: 1.8; }
+    .email-content p { margin-bottom: 0.8rem; }
+
+    .sus { position: relative; cursor: pointer; border-radius: 3px; transition: background 0.2s, color 0.2s; padding: 1px 3px; border-bottom: 2px dashed rgba(224,80,80,0.4); }
+    .sus:hover { background: rgba(224,80,80,0.08); }
+    .sus.found { background: rgba(224,80,80,0.12); border-bottom: 2px solid var(--danger); color: var(--danger); font-weight: 700; }
+    .sus.found::after { content: ' ⚠'; font-size: 0.8em; }
+
+    .sus-tooltip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #2d2233; color: #fff; font-family: 'DM Mono', monospace; font-size: 0.72rem; padding: 0.6rem 0.9rem; border-radius: 8px; z-index: 50; pointer-events: none; width: 220px; text-align: center; line-height: 1.5; }
+    .sus-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #2d2233; }
+    .sus.found .sus-tooltip { display: block; }
+
+    .phishing-footer { border-top: 1px solid var(--border); padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: #fdf9fb; }
+    .flags-remaining { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+    .flags-remaining strong { color: var(--text); }
+
+    .phishing-result { display: none; padding: 2rem 2.5rem; border-top: 1px solid var(--border); background: linear-gradient(135deg,rgba(247,184,196,0.1),rgba(201,184,247,0.1)); text-align: center; }
+    .phishing-result.show { display: block; }
+    .result-score { font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: var(--text); margin-bottom: 0.5rem; }
+    .result-msg { font-size: 0.95rem; color: var(--muted); margin-bottom: 1.2rem; line-height: 1.6; }
+
+    .contact-inner { background: var(--card); border: 1.5px solid var(--border); border-radius: 24px; padding: 3rem; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+    .contact-inner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg,rgba(247,184,196,0.12),rgba(201,184,247,0.12),rgba(184,240,224,0.12)); pointer-events: none; }
+    .contact-inner h2 { margin-bottom: 0.8rem; }
+    .contact-sub { color: var(--muted); font-size: 1rem; margin-bottom: 2rem; line-height: 1.7; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    footer { position: relative; z-index: 1; text-align: center; padding: 2rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-links a { font-size: 0.65rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .hero-inner { flex-direction: column-reverse; align-items: flex-start; gap: 2rem; }
+      .hero-photo-wrap { width: 120px; height: 120px; }
+      .email-client { grid-template-columns: 1fr; }
+      .email-sidebar { display: none; }
+      .contact-inner { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <nav>
+    <a class="nav-logo" href="#">jensy<span>m.com</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#certs">Certs</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-eyebrow">// cybersecurity professional</p>
+        <h1>Jensy<br><em>Maldonado</em></h1>
+        <p class="hero-sub">Cybersecurity professional passionate about protecting systems, detecting threats, and building a safer digital world. One red flag at a time.</p>
+        <div class="hero-tags">
+          <span class="tag tag-pink">Threat Analysis</span>
+          <span class="tag tag-lav">Access Management</span>
+          <span class="tag tag-mint">Compliance</span>
+          <span class="tag tag-sky">Risk Management</span>
+          <span class="tag tag-pink">Anti-Fraud</span>
+        </div>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#contact">Get in touch</a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/jensy-maldonado/" target="_blank">LinkedIn ↗</a>
+          <a class="btn btn-outline" href="Jensy_Resume.pdf" download>Resume ↓</a>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <img src="Jensy.png" alt="Jensy Maldonado" class="hero-photo" />
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">// 01. about</p>
+    <h2>Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm <strong>Jensy Maldonado</strong>, a cybersecurity professional based in New York with a focus on identity and access management, risk analysis, and security compliance.</p>
+        <p>With hands-on experience in both the financial sector and enterprise networking, I'm passionate about defending organizations against evolving threats and building security-first cultures.</p>
+        <p>I hold the <strong>ISC2 CC</strong> certification, am finishing up <strong>CompTIA Security+</strong>, and stay actively involved in the STEM community through leadership and advocacy. Bilingual in English and Spanish.</p>
+      </div>
+      <div class="about-card">
+        <h3>// Quick Facts</h3>
+        <div class="stat-row">
+          <div class="stat-item"><div class="stat-dot" style="background:var(--pink)"></div><div><span>New York, NY</span><small>Based in</small></div></div>
+          <div class="stat-item"><div class="stat-dot" style="background:var(--lavender)"></div><div><span>Cybersecurity</span><small>Focus Area</small></div></div>
+          <div class="stat-item"><div class="stat-dot" style="background:var(--mint)"></div><div><span>ISC2 CC · Security+ (In Progress)</span><small>Certifications</small></div></div>
+          <div class="stat-item"><div class="stat-dot" style="background:var(--sky)"></div><div><span>Open to Opportunities</span><small>Status</small></div></div>
+          <div class="stat-item"><div class="stat-dot" style="background:var(--peach)"></div><div><span>English · Spanish</span><small>Languages</small></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">// 02. experience</p>
+    <h2>Where I've Worked</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <span class="timeline-title">Information Security Intern</span>
+            <span class="timeline-date">Mar 2026 – Present</span>
+          </div>
+          <div class="timeline-company">UniCredit · New York City</div>
+          <ul class="timeline-bullets">
+            <li>Supporting the implementation of the UniCredit New York Foreign Branch (NYFB) security program to safeguard personnel, information, and both tangible and intangible assets</li>
+            <li>Ensuring proper access management for local applications and systems, including password management support</li>
+            <li>Acting as local point of contact for Security, providing day-to-day consultation, support, and addressing security-related issues</li>
+            <li>Supporting the CISO in managing security incidents and collaborating with local IT service providers to implement necessary measures</li>
+            <li>Providing direct information security training to all employees, contractors, and third parties</li>
+            <li>Managing physical security and access controls, including regular reviews of access logs and assessments of controls to safeguard premises and personnel</li>
+            <li>Developing, maintaining, and regularly testing NYFB's BCDR plans to ensure operational resilience and preparedness for disruptions</li>
+            <li>Conducting Business Impact Analyses (BIA) to identify critical processes, dependencies, and potential impacts of disruptions</li>
+            <li>Supporting the CISO with implementation and monitoring of anti-fraud controls to prevent, detect, and respond to fraudulent activities</li>
+            <li>Participating in security risk assessments and working with stakeholders to implement appropriate mitigation strategies</li>
+          </ul>
+          <div class="timeline-pills">
+            <span class="pill">IAM</span><span class="pill">BCDR</span><span class="pill">BIA</span><span class="pill">Anti-Fraud</span><span class="pill">Security Awareness</span><span class="pill">Risk Assessment</span><span class="pill">Physical Security</span>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <span class="timeline-title">IT Security Intern</span>
+            <span class="timeline-date">May 2024 – Dec 2025</span>
+          </div>
+          <div class="timeline-company">Pace University · Pleasantville, NY</div>
+          <ul class="timeline-bullets">
+            <li>Configured and maintained Cisco network infrastructure for over 14,000 students and 1,200 faculty/staff, including switches, firewalls, and wireless controllers</li>
+            <li>Assisted with network migrations, upgrades, and expansions, deploying access points, switches, routers, and firewalls across multiple campuses with minimal downtime</li>
+            <li>Assisted in deployment and management of Cisco Secure Firewall Management Center 4600 and Firepower 9000 Series Threat Defense systems</li>
+            <li>Utilized Splunk as a SIEM to monitor network logs, analyze security events, and support incident triage across multi-campus environments</li>
+          </ul>
+          <div class="timeline-pills">
+            <span class="pill">Cisco</span><span class="pill">Splunk</span><span class="pill">SIEM</span><span class="pill">Firewalls</span><span class="pill">Wireless</span><span class="pill">Network Security</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">// 04. education</p>
+    <h2>Academic Background</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-header"><span class="timeline-title">M.S. Cybersecurity</span><span class="timeline-date">Sep 2023 – May 2025</span></div>
+          <div class="timeline-company">Pace University · Seidenberg School of Computer Science &amp; Information Systems</div>
+          <p class="timeline-desc">Graduate studies focused on cybersecurity principles, threat analysis, risk management, and information security strategy.</p>
+          <div class="timeline-pills"><span class="pill">Threat Analysis</span><span class="pill">Risk Management</span><span class="pill">InfoSec</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-header"><span class="timeline-title">B.E. Computer Engineering</span><span class="timeline-date">Aug 2020 – May 2023</span></div>
+          <div class="timeline-company">The City College of New York</div>
+          <p class="timeline-desc">Undergraduate engineering degree with a focus on computer systems, hardware, and software fundamentals.</p>
+          <div class="timeline-pills"><span class="pill">Computer Systems</span><span class="pill">Engineering</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:3.5rem">// community &amp; leadership</p>
+    <h2 style="margin-bottom:1.5rem">Beyond the Classroom</h2>
+    <div class="community-card" style="margin-bottom:1.2rem">
+      <div class="community-icon">🛡️</div>
+      <div class="community-body">
+        <div class="org-logos">
+          <img class="org-logo" src="laic.png" alt="Latinas in Cyber" />
+        </div>
+        <h3>Chapter Lead</h3>
+        <div class="community-org">Latinas in Cyber (LAIC) · Present</div>
+        <p>Leading the local LAIC chapter, connecting Latinas in the cybersecurity field through community events, mentorship, and professional development opportunities. Has participated in and organized multiple LAIC events including panels, workshops, and networking sessions.</p>
+        <div class="timeline-pills" style="margin-top:0.8rem">
+          <span class="pill">Chapter Leadership</span><span class="pill">Mentorship</span><span class="pill">Women in Cyber</span><span class="pill">Community</span>
+        </div>
+      </div>
+    </div>
+    <div class="community-card">
+      <div class="community-icon">🌎</div>
+      <div class="community-body">
+        <div class="org-logos">
+          <img class="org-logo" src="laesa.png" alt="SHPE" />
+        </div>
+        <h3>President</h3>
+        <div class="community-org">LAESA-SHPE · Jun 2021 – Present</div>
+        <p>Leading a student and professional organization at the intersection of Latin American engineering and science communities, fostering academic growth, career development, and STEM advocacy for underrepresented students. Actively participates in and organizes SHPE chapter events, conferences, and community outreach.</p>
+        <div class="timeline-pills" style="margin-top:0.8rem">
+          <span class="pill">Leadership</span><span class="pill">STEM Advocacy</span><span class="pill">Community Building</span><span class="pill">Diversity in Tech</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CERTS -->
+  <section id="certs">
+    <p class="section-label">// 05. certifications</p>
+    <h2>Credentials</h2>
+    <div class="certs-grid">
+      <a class="cert-card" href="https://www.credly.com/badges/4c8a1126-faa4-4169-99f2-17ec3539cda7/public_url" target="_blank">
+        <div class="cert-icon" style="background:#f0f3fe">🛡️</div>
+        <div class="cert-name">Certified in Cybersecurity</div>
+        <div class="cert-issuer">ISC2 · CC</div>
+        <span class="cert-status cert-active">✓ Active</span>
+      </a>
+      <div class="cert-card" style="cursor:default">
+        <div class="cert-icon" style="background:#fef3e8">🔐</div>
+        <div class="cert-name">CompTIA Security+</div>
+        <div class="cert-issuer">CompTIA · SY0-701</div>
+        <span class="cert-status cert-progress">Scheduled</span>
+      </div>
+      <div class="cert-card" style="cursor:default">
+        <div class="cert-icon" style="background:#f0f8fe">🌐</div>
+        <div class="cert-name">CCNA Cybersecurity</div>
+        <div class="cert-issuer">Cisco · 200-201 CCNACBR</div>
+        <span class="cert-status" style="background:#f3f0fe;color:#6b55b8;border:1px solid var(--lavender)">Coming Soon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">// 07. skills</p>
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-label">Programming & Scripting</div>
+        <div class="timeline-pills"><span class="pill">Python</span><span class="pill">PowerShell</span><span class="pill">Linux</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Security Tools</div>
+        <div class="timeline-pills"><span class="pill">Wireshark</span><span class="pill">Kali Linux</span><span class="pill">Burp Suite</span><span class="pill">Nmap</span><span class="pill">Metasploit</span><span class="pill">Security Onion</span><span class="pill">CyberArk</span><span class="pill">Magnet Axiom</span></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Platforms & Frameworks</div>
+        <div class="timeline-pills"><span class="pill">Splunk</span><span class="pill">Microsoft Azure</span><span class="pill">Docker</span><span class="pill">Jira</span><span class="pill">MITRE ATT&amp;CK</span><span class="pill">NIST</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">// 06. projects</p>
+    <h2>Notable Projects</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <span class="timeline-title">Honeypot Deployment &amp; Threat Analysis</span>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Deployed containerized honeypots using Docker to simulate vulnerable SSH and HTTP services, capturing over 50 intrusion attempts in isolated virtual networks</li>
+            <li>Automated threat detection scripts in Python, forwarding real-time alerts to Splunk dashboards and mapping attacker behaviors to the MITRE ATT&amp;CK framework</li>
+            <li>Visualized attack patterns with Matplotlib, analyzing 50+ unique IPs and 200+ credential attempts across 3 detailed graphs highlighting top attack vectors and threat geolocation</li>
+          </ul>
+          <div class="timeline-pills"><span class="pill">Docker</span><span class="pill">Python</span><span class="pill">Splunk</span><span class="pill">MITRE ATT&amp;CK</span><span class="pill">Matplotlib</span></div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <span class="timeline-title">Splunk Security Monitoring &amp; Threat Detection Lab</span>
+          </div>
+          <ul class="timeline-bullets">
+            <li>Installed and configured Splunk Enterprise, onboarding Windows, Linux, and AWS CloudTrail logs while managing indexes, access controls, and forwarders</li>
+            <li>Built SPL queries and real-time dashboards to detect brute-force attempts, port scans, and anomalous authentication behavior mapped to MITRE ATT&amp;CK techniques</li>
+            <li>Investigated alerts by analyzing log patterns, correlating events, and documenting findings using incident-response reporting methods</li>
+          </ul>
+          <div class="timeline-pills"><span class="pill">Splunk</span><span class="pill">SPL</span><span class="pill">AWS CloudTrail</span><span class="pill">MITRE ATT&amp;CK</span><span class="pill">Incident Response</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <p class="section-label">// 07. contact</p>
+      <h2>Let's Connect</h2>
+      <p class="contact-sub">Interested in collaborating or have an opportunity to discuss?<br>Feel free to reach out.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="/cdn-cgi/l/email-protection#701a151e03091d111c141f1e11141f4130171d11191c5e131f1d">Email ↗</a>
+        <a class="btn btn-outline" href="https://www.linkedin.com/in/jensy-maldonado/" target="_blank">LinkedIn ↗</a>
+        <a class="btn btn-outline" href="https://www.credly.com/badges/4c8a1126-faa4-4169-99f2-17ec3539cda7/public_url" target="_blank">Credly ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHISHING EASTER EGG -->
+  <div class="easter-egg" id="easterEgg" onclick="triggerEgg()">
+    <div class="easter-egg-bubble">psst... click me 👀</div>
+    <span class="easter-egg-icon">🎣</span>
+  </div>
+
+  <!-- EGG MODAL -->
+  <div class="egg-modal-overlay" id="eggModal" onclick="closeEgg(event)">
+    <div class="egg-modal">
+      <div class="egg-big">🎣</div>
+      <h3>You just got phished.</h3>
+      <p>You clicked something suspicious without knowing what it was. That's exactly how real phishing attacks work. Curiosity does the trick.</p>
+      <div class="egg-tip">🛡️ Pro tip: Always verify before you click. If it looks too curious to ignore, that's the point.</div>
+      <button class="btn btn-primary" onclick="closeEgg()">Got it, lesson learned!</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>jensym.com · built with ♡ · 2026</p>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Scroll reveal
+    const allReveal = document.querySelectorAll('.timeline-item, .community-card');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+    allReveal.forEach(el => obs.observe(el));
+
+    // Easter egg
+    function triggerEgg() {
+      document.getElementById('eggModal').classList.add('show');
+    }
+    function closeEgg(e) {
+      if (!e || e.target === document.getElementById('eg
